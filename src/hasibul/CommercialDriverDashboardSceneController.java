@@ -50,7 +50,7 @@ public class CommercialDriverDashboardSceneController implements Initializable {
     }
 
     @FXML
-    private void restAreaButtonOnClick(ActionEvent event) throws IOException {
+    private void restAreaButtonOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
         Button button = (Button) event.getSource();
 
         Scene currentScene = button.getScene();
@@ -106,7 +106,13 @@ public class CommercialDriverDashboardSceneController implements Initializable {
     }
 
     @FXML
-    private void emergencyAssistanceButtonOnClick(ActionEvent event) {
+    private void emergencyAssistanceButtonOnClick(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(EmergencyAssistanceRequestPopUpSceneController.class.getResource("EmergencyAssistanceRequestPopUp.fxml"));
+        Scene popup = new Scene(loader.load());
+        EmergencyAssistanceRequestPopUpSceneController controllerClass = loader.getController();
+        controllerClass.initializeScene(this.user);
+        Stage popUpStage = new Stage();
+        popUpStage.setScene(popup);
+        popUpStage.show();
     }
-    
 }
