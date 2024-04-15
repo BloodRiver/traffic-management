@@ -61,15 +61,16 @@ public class MessageThreadsDetailsSceneController implements Initializable {
 
     @FXML
     private void goBackButtonOnClick(ActionEvent event) throws IOException {
-        Button button = (Button) event.getSource();
+        Button button = (Button) event.getSource();  // Node
         Scene currentScene = button.getScene();
-        
         Stage currentStage = (Stage) currentScene.getWindow();
         
-        Parent root = FXMLLoader.load(MessageThreadsListSceneController.class.getResource("MessageThreadsListScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(MessageThreadsListSceneController.class.getResource("MessageThreadsListScene.fxml"));
         
-        Scene newScene = new Scene(root);
+        Scene newScene = new Scene(loader.load());
+        MessageThreadsListSceneController controllerClass = loader.getController();
         
+        controllerClass.initializeScene(incidentDepartmentManager);
         currentStage.setScene(newScene);
     }
     
@@ -78,13 +79,17 @@ public class MessageThreadsDetailsSceneController implements Initializable {
         this.thread = thread;
         this.incidentDepartmentManager = incidentDepartmentManager;
         
-        ArrayList<Message> allMessage = incidentDepartmentManager.loadAllMessageByThread(this.thread);
+        ArrayList<Message> allMessage = this.incidentDepartmentManager.loadAllMessageByThread(this.thread);
         System.out.println("Messages: " + allMessage);
         
         for (Message eachMessage: allMessage)
         {
             messageListTextArea.appendText("Author: " + eachMessage.getAuthor().getUsername() + "\nDate: " + eachMessage.getDate() + "\nMessage:\n" + eachMessage.getMessageContent() + "\n-----------------------------------\n");
         }
+        
+        subjectLabel.setText("Subject: " + thread.getSubject());
+        authorLabel.setText("Author: " + thread.getAuthor().getUsername());
+        dateLabel.setText("Date:  " + thread.getDateOpened());
     }
     
 }
