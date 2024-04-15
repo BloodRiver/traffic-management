@@ -46,11 +46,8 @@ public class MessageThreadsListSceneController implements Initializable {
     @FXML
     private void backToDashboardButtonOnClick(ActionEvent event) throws IOException {
         Button button = (Button) event.getSource();
-        
         Scene currentScene = button.getScene();
-        
         Stage currentStage = (Stage) currentScene.getWindow();
-        
         FXMLLoader loader = new FXMLLoader(IncidentDepartmentManagerDashboardSceneController.class.getResource("IncidentDepartmentManagerDashboardScene.fxml"));
         
         Scene newScene = new Scene(loader.load());
@@ -63,9 +60,7 @@ public class MessageThreadsListSceneController implements Initializable {
     @FXML
     private void openThreadButtonOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
         Button button = (Button) event.getSource();
-        
         Scene currentScene = button.getScene();
-        
         Stage currentStage = (Stage) currentScene.getWindow();
         
         FXMLLoader loader = new FXMLLoader(MessageThreadsDetailsSceneController.class.getResource("MessageThreadsDetailsScene.fxml"));
@@ -73,8 +68,8 @@ public class MessageThreadsListSceneController implements Initializable {
         Scene newScene = new Scene(loader.load());
         MessageThreadsDetailsSceneController controllerClass = loader.getController();
         
-        System.out.println("Selected: " + threadListView.getSelectionModel().getSelectedItem());
         controllerClass.initializeScene(incidentDepartmentManager, threadListView.getSelectionModel().getSelectedItem());
+        System.out.println("Selected: " + threadListView.getSelectionModel().getSelectedItem());
         currentStage.setScene(newScene);
     }
 
@@ -90,7 +85,7 @@ public class MessageThreadsListSceneController implements Initializable {
         this.incidentDepartmentManager = incidentDepartmentManager;
         
         try {
-            allMessageThread = incidentDepartmentManager.loadAllMessageThreadFromDatabase();
+            allMessageThread = this.incidentDepartmentManager.loadAllMessageThreadFromDatabase();
             
             threadListView.getItems().addAll(allMessageThread);
         } catch (IOException ex) {

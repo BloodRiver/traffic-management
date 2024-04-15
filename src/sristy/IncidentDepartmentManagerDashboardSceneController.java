@@ -37,10 +37,7 @@ public class IncidentDepartmentManagerDashboardSceneController implements Initia
         Button button = (Button) event.getSource();
         Scene currentScene = button.getScene();
         Stage currentStage = (Stage) currentScene.getWindow();
-        FXMLLoader loader = new FXMLLoader(LoginSceneController.class.getResource("LoginScene.fxml"));
-        Scene newScene = new Scene(loader.load());
-        IncidentReportingAndTrackingSceneController controllerClass = loader.getController();
-        controllerClass.initializeScene(user);
+        Scene newScene = new Scene(FXMLLoader.load(LoginSceneController.class.getResource("LoginScene.fxml")));
         currentStage.setScene(newScene);
     }
     
@@ -68,8 +65,7 @@ public class IncidentDepartmentManagerDashboardSceneController implements Initia
         Stage currentStage = (Stage) currentScene.getWindow();
         FXMLLoader loader = new FXMLLoader(MessageThreadsListSceneController.class.getResource("MessageThreadsListScene.fxml"));
         Scene newScene = new Scene(loader.load());
-        MessageThreadsListSceneController controllerClass;
-        controllerClass = loader.getController();
+        MessageThreadsListSceneController controllerClass = loader.getController();
         controllerClass.initializeScene(user);
         currentStage.setScene(newScene);
     }
