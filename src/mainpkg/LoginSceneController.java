@@ -4,6 +4,8 @@
  */
 package mainpkg;
 
+import hasibul.CommercialDriverDashboardSceneController;
+import hasibul.modelclasses.CommercialDriver;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -79,6 +81,49 @@ public class LoginSceneController implements Initializable {
                 alert.setContentText("User not found");
                 alert.showAndWait();
             }
+        }
+        else if (usertypeComboBox.getSelectionModel().getSelectedItem().equals("Commercial Driver"))
+        {
+            CommercialDriver user = new CommercialDriver();
+            user = user.loadByUsername(usernameTextField.getText());
+            if (user != null)
+            {
+                if (user.checkPassword(passwordPasswordField.getText()))
+                {
+                    Button button = (Button) event.getSource();
+
+                    Scene currentScene = button.getScene();
+
+                    Stage currentStage = (Stage) currentScene.getWindow();
+
+                    FXMLLoader loader = new FXMLLoader(CommercialDriverDashboardSceneController.class.getResource("CommercialDriverDashboardScene.fxml"));
+
+                    Scene newScene = new Scene(loader.load());
+
+                    CommercialDriverDashboardSceneController controllerClass = loader.getController();
+                    controllerClass.initializeScene(user);
+
+                    currentStage.setScene(newScene);
+                }
+                else
+                {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setContentText("Password does not match");
+                    alert.showAndWait();
+                }
+            }
+            else
+            {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setContentText("User not found");
+                alert.showAndWait();
+            }
+        }
+        else
+        {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setContentText("Please choose a user");
+            alert.showAndWait();
         }
     }
     
